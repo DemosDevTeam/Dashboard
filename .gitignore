@@ -1,8 +1,14 @@
 mlab*.py
+sentiment
+.ipynb_checkpoints
+*.ipynb
+.vscode
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+data/
 
 # C extensions
 *.so
