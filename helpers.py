@@ -8,26 +8,26 @@ import plotly.figure_factory as ff
 import dash_table
 import pandas as pd
 import numpy as np
-import scipy
+# import scipy
 
-def generateDistplot():
-    x1 = np.random.randn(200) - 2 
-    x2 = np.random.randn(200)
-    x3 = np.random.randn(200) + 2 
+# def generateDistplot():
+#     x1 = np.random.randn(200) - 2 
+#     x2 = np.random.randn(200)
+#     x3 = np.random.randn(200) + 2 
 
-    hist_data = [x1, x2, x3]
+#     hist_data = [x1, x2, x3]
 
-    group_labels = ['Group 1', 'Group 2', 'Group 3']
-    colors = ['#A56CC1', '#A6ACEC', '#63F5EF']
+#     group_labels = ['Group 1', 'Group 2', 'Group 3']
+#     colors = ['#A56CC1', '#A6ACEC', '#63F5EF']
 
-    # Create distplot with curve_type set to 'normal'
-    fig = ff.create_distplot(hist_data, group_labels, colors=colors,
-                            bin_size=.2, show_rug=False)
+#     # Create distplot with curve_type set to 'normal'
+#     fig = ff.create_distplot(hist_data, group_labels, colors=colors,
+#                             bin_size=.2, show_rug=False)
 
-    # Add title
-    fig['layout'].update(title='Hist and Curve Plot')
+#     # Add title
+#     fig['layout'].update(title='Hist and Curve Plot')
 
-    return fig
+#     return fig
 
 def generatePopPyramid():
     women_bins = np.array([-600, -623, -653, -650, -670, -578, -541, -411, -322, -230])
@@ -88,30 +88,30 @@ def generateBubbleChart():
 
     return figure
 
-def generateChloropleth():
-    df_sample = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/laucnty16.csv')
-    df_sample['State FIPS Code'] = df_sample['State FIPS Code'].apply(lambda x: str(x).zfill(2))
-    df_sample['County FIPS Code'] = df_sample['County FIPS Code'].apply(lambda x: str(x).zfill(3))
-    df_sample['FIPS'] = df_sample['State FIPS Code'] + df_sample['County FIPS Code']
+# def generateChloropleth():
+#     df_sample = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/laucnty16.csv')
+#     df_sample['State FIPS Code'] = df_sample['State FIPS Code'].apply(lambda x: str(x).zfill(2))
+#     df_sample['County FIPS Code'] = df_sample['County FIPS Code'].apply(lambda x: str(x).zfill(3))
+#     df_sample['FIPS'] = df_sample['State FIPS Code'] + df_sample['County FIPS Code']
 
-    colorscale = ["#f7fbff","#ebf3fb","#deebf7","#d2e3f3","#c6dbef","#b3d2e9","#9ecae1",
-                "#85bcdb","#6baed6","#57a0ce","#4292c6","#3082be","#2171b5","#1361a9",
-                "#08519c","#0b4083","#08306b"]
-    endpts = list(np.linspace(1, 12, len(colorscale) - 1))
-    fips = df_sample['FIPS'].tolist()
-    values = df_sample['Unemployment Rate (%)'].tolist()
+#     colorscale = ["#f7fbff","#ebf3fb","#deebf7","#d2e3f3","#c6dbef","#b3d2e9","#9ecae1",
+#                 "#85bcdb","#6baed6","#57a0ce","#4292c6","#3082be","#2171b5","#1361a9",
+#                 "#08519c","#0b4083","#08306b"]
+#     endpts = list(np.linspace(1, 12, len(colorscale) - 1))
+#     fips = df_sample['FIPS'].tolist()
+#     values = df_sample['Unemployment Rate (%)'].tolist()
 
-    fig = ff.create_choropleth(
-        fips=fips, values=values,
-        binning_endpoints=endpts,
-        colorscale=colorscale,
-        show_state_data=False,
-        show_hover=True, centroid_marker={'opacity': 0},
-        asp=2.9, title='USA by Unemployment %',
-        legend_title='% unemployed'
-    )
+#     fig = ff.create_choropleth(
+#         fips=fips, values=values,
+#         binning_endpoints=endpts,
+#         colorscale=colorscale,
+#         show_state_data=False,
+#         show_hover=True, centroid_marker={'opacity': 0},
+#         asp=2.9, title='USA by Unemployment %',
+#         legend_title='% unemployed'
+#     )
 
-    return fig
+#     return fig
 
 
 ### Helper Functions for Plotting and generating Tables

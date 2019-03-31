@@ -1,5 +1,14 @@
 
-TODO: 
+TODO:
+
+
+
+
+
+
+
+
+
 
 Ensure that we can host the dash application for free
 

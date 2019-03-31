@@ -8,11 +8,10 @@ import plotly.graph_objs as go
 import scipy
 import pandas as pd
 
-# from helpers import generateUserTableSummary, generateVideoTableSummary, generatePieChart, generateLinePlot, generateCategoricalPlot
 from helpers import *
 
+# TODO: Read-in Mlab data
 # Data Maniuplation
-
 # Read in users and videos dataframes and select useful columns, dropping NA values
 users = pd.read_csv('data/csv/users.csv', index_col=0)
 
@@ -21,10 +20,10 @@ users = (users[['age', 'children', 'education', 'gender',
 
 videos = pd.read_csv('data/csv/videos.csv', index_col=0, encoding='latin1')
 
-
 # Group users by income and find counts of each
 # TODO: Add selecter to choose grouping variable (change from income as default)
 # uniqueUsers = pd.DataFrame(users.groupby('income').count())
+
 # Start Flask Application
 server = flask.Flask(__name__)
 
@@ -34,7 +33,6 @@ app = dash.Dash(__name__, server=server, external_stylesheets=[
 _app_route = '/dash-core-components/logout_button'
 
 # Create a login route
-
 @app.server.route('/custom-auth/login', methods=['POST'])
 def route_login():
     data = flask.request.form
@@ -209,11 +207,15 @@ app.layout = html.Div(
                             className='row',
                             children=[
                                     dcc.Graph(
-                                    id='plot1',
-                                    figure=generatePieChart(users, 'age')),
+                                        id='plot1',
+                                        figure=generatePieChart(users, 'age')),
                                     dcc.Graph(
-                                    id='plot2',
-                                    figure=generatePieChart(users, 'race')),                                                                        
+                                        id='plot2',
+                                        figure=generatePieChart(users, 'race')),    
+                                    dcc.Graph(
+                                        id='plot3',
+                                        figure=generatePieChart(users, 'income')
+                                    )                                                                    
                                 # html.Div(
                                 #     className='col-lg-4',
                                 #     children=[
@@ -289,29 +291,29 @@ app.layout = html.Div(
                     generateUserTableSummary(users),
 
                     html.Br(),
-                    dcc.Graph(id='plot3',
+                    dcc.Graph(id='plot4',
                         figure=(generateCategoricalPlot(20, 3))    
                     ),
 
-                    dcc.Graph(id='plot4',
+                    dcc.Graph(id='plot5',
                         figure=generateLinePlot()
                     ),
 
-                    dcc.Graph(id='plot5',
+                    dcc.Graph(id='plot6',
                         figure=generateBubbleChart()
                     ),
 
-                    dcc.Graph(id='plot6',
+                    dcc.Graph(id='plot7',
                         figure=generateBoxPlot()    
                     ),
 
-                    dcc.Graph(id='plot7',
+                    dcc.Graph(id='plot8',
                         figure=generatePopPyramid()    
                     ),
 
-                    dcc.Graph(id='plot8',
-                        figure=generateDistplot()
-                    ),
+                    # dcc.Graph(id='plot8',
+                    #     figure=generateDistplot()
+                    # ),
 
                     dcc.RadioItems(
                         id='groupingDropdown',
