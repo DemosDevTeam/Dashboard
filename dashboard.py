@@ -10,6 +10,7 @@ import pandas as pd
 
 from helpers import *
 
+
 # TODO: Read-in Mlab data
 # Data Maniuplation
 # Read in users and videos dataframes and select useful columns, dropping NA values
@@ -20,13 +21,8 @@ users = (users[['age', 'children', 'education', 'gender',
 
 videos = pd.read_csv('data/csv/videos.csv', index_col=0, encoding='latin1')
 
-# Group users by income and find counts of each
-# TODO: Add selecter to choose grouping variable (change from income as default)
-# uniqueUsers = pd.DataFrame(users.groupby('income').count())
-
 # Start Flask Application
 server = flask.Flask(__name__)
-
 app = dash.Dash(__name__, server=server, external_stylesheets=[
                 'https://codepen.io/chriddyp/pen/bWLwgP.css'])
 
@@ -41,7 +37,6 @@ def route_login():
 
     if not username or not password:
         flask.abort(401)
-
         
     # actual implementation should verify the password.
     # Recommended to only keep a hash in database and use something like
