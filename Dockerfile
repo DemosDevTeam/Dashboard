@@ -1,23 +1,41 @@
-FROM ubuntu:16.04
+FROM python:3.7.2
+
+USER root
+
+WORKDIR /app
+
+ADD . /app
+
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+EXPOSE 8050
+
+ENV NAME Dashboard
+
+CMD ["python", "dashboard.py"]
+
+
+# FROM ubuntu:16.04
 
 # MAINTANER Your Name "lexokan@gmail.com"
 
-RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+# RUN apt-get update -y && \
+#     apt-get install -y python-pip python-dev
 
-# We copy just the requirements.txt first to leverage Docker cache
-COPY ./requirements.txt /app/requirements.txt
+# # We copy just the requirements.txt first to leverage Docker cache
 
-WORKDIR /app    
+# COPY ./requirements.txt /app/requirements.txt
 
-RUN pip install --upgrade pip \
-    pip install -r requirements.txt
+# WORKDIR /app    
 
-COPY . /app
+# RUN pip install --upgrade pip \
+#     pip install -r requirements.txt
 
-ENTRYPOINT [ "python" ]
+# # COPY . /app
 
-CMD [ "dashboard.py" ]
+# ENTRYPOINT [ "python" ]
+
+# CMD [ "python ", "dashboard.py" ]
 # FROM python:3.6.7
 # ADD . /code
 # WORKDIR /code
