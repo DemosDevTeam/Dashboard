@@ -1,15 +1,16 @@
 import flask
 import dash
+import dash_auth
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 
-import scipy
+# import scipy
 import pandas as pd
 
 from helpers import *
-
+from mlabread import getValidPairs
 
 # TODO: Read-in Mlab data
 # Data Maniuplation
@@ -25,6 +26,14 @@ videos = pd.read_csv('data/csv/videos.csv', index_col=0, encoding='latin1')
 server = flask.Flask(__name__)
 app = dash.Dash(__name__, server=server, external_stylesheets=[
                 'https://codepen.io/chriddyp/pen/bWLwgP.css'])
+
+### AUTH 
+
+VALID_PAIRS = getValidPairs()
+auth = dash_auth.BasicAuth(
+    app,
+    VALID_PAIRS
+)
 
 _app_route = '/dash-core-components/logout_button'
 
@@ -50,21 +59,21 @@ def route_login():
     rep.set_cookie('custom-auth-session', username)
     return rep 
 
-# logout route 
-@app.server.route('/custom-auth/logout', methods=['POST'])
-def route_logout():
-    rep = flask.redirect(_app_route)
-    rep.set_cookie('custom-auth-session', '', expires=0)
-    return rep
+# TODO: logout route 
+# @app.server.route('/custom-auth/logout', methods=['POST'])
+# def route_logout():
+#     rep = flask.redirect(_app_route)
+#     rep.set_cookie('custom-auth-session', '', expires=0)
+#     return rep
 
 # login form dash component 
-login_form = html.Div([
-    html.Form([
-        dcc.Input(placeholder='username', name='username'),
-        dcc.Input(placeholder='password', name='password', type='password'),
-        html.Button('Login', type='submit')
-    ], action='/custom-auth/login', method='post')
-])
+# login_form = html.Div([
+#     html.Form([
+#         dcc.Input(placeholder='username', name='username'),
+#         dcc.Input(placeholder='password', name='password', type='password'),
+#         html.Button('Login', type='submit')
+#     ], action='/custom-auth/login', method='post')
+# ])
 
 #app.layout = html.Div(id='custom-auth-frame')
 
@@ -437,6 +446,6 @@ def makeBarChart(value):
 
 # Start Dash Application
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', debug=True, port=8050)
-    # app.run_server(debug=True, port=8050, host='127.0.0.1')
+    # app.run_server(host='0.0.0.0', debug=True, port=8050)
+    app.run_server(debug=True, port=8050, host='127.0.0.1')
     app.run_server(debug=True)
